@@ -183,7 +183,6 @@ def colora_colonne_fornitori(df):
 
     return styles
 
-
 def genera_pdf_report(df_act_f, df_bdg_f, df_bdg_raw, anno_sel, mese_ref):
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(
@@ -444,16 +443,11 @@ def genera_pdf_report(df_act_f, df_bdg_f, df_bdg_raw, anno_sel, mese_ref):
     buffer.seek(0)
     return buffer.getvalue()
 
-
-
-
 st.set_page_config(
     page_title="Costi Fissi Arconvert Spa",
     page_icon=":central_african_republic:",
     layout="wide"
 )
-
-
 
 st.title("ARCONVERT Report Costi Fissi")
 
@@ -567,7 +561,6 @@ if uploaded_transazioni and uploaded_budget:
             #quiquiquipdf creation
             s_mtd = df_sezione[df_sezione["Mese"] == m_max]["Importo_ACT_kEUR"].sum() if m_max else 0
             s_ytd = df_sezione[df_sezione["Mese"] <= m_max]["Importo_ACT_kEUR"].sum() if m_max else 0
-            st.markdown("---")
             st.subheader(f"Actual MTD per Voci di Spesa (in k€)")
             piv_mensile = df_sezione.pivot_table(index="Mese", columns=col_raggruppamento, values="Importo_ACT_kEUR", aggfunc="sum", fill_value=0)
             piv_mensile["TOTALE MENSILE"] = piv_mensile.sum(axis=1)
@@ -602,9 +595,9 @@ if uploaded_transazioni and uploaded_budget:
             )
 
         with tab_act_bdg:
-            tipo_vista = st.radio("Orizzonte Temporale:", ["MTD (Valori Mensili Puntuali)", "YTD (Cumulato Progressivo Mese per Mese)"], horizontal=True)
             st.header("Fixed Costs - ACT vs BDG")
             st.subheader("MTD / YTD Actual vs Budget per Voce di Spesa")
+            tipo_vista = st.radio("Orizzonte Temporale:", ["MTD (Valori Mensili Puntuali)", "YTD (Cumulato Progressivo Mese per Mese)"], horizontal=True)
             df_act_m1=df_act_f.copy()
             df_bdg_m1=df_bdg_f.copy()
             piv_act_m = df_act_m1.pivot_table(index="Mese", columns="Mappatura", values="Importo_ACT_kEUR", aggfunc="sum", fill_value=0)
