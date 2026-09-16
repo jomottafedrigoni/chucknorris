@@ -115,6 +115,7 @@ def elabora_report(df_trans):
 
     df_out["Mappatura"] = df_out["Account_Dim_Key"].map(MAPPATURA_DEFAULT)
     df_out = df_out.dropna(subset=["Mappatura"]).reset_index(drop=True)
+    df_out = df_out.fillna("No Supplier")
 
     col_data = "Posting Date" if "Posting Date" in df_out.columns else ("Data documento" if "Data documento" in df_out.columns else None)
     col_imp = "Amount" if "Amount" in df_out.columns else None
